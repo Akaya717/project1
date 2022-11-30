@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="./js/myselfajax.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        myajax({
+            method: 'POST',
+            url: 'http://www.liulongbin.top:3006/api/addbook',
+            data: {
+                "bookname":"fdf水",
+                "author":"fsaf施",
+                "publisher":"天sda津书出社"
+            },
+            success:function(res){
+                console.log(res)
+            }
+        })
+        function getGet(){
+            //1.创建 XRH对象
+        var xhr = new XMLHttpRequest()
+        //2.调用open函数，指定请求反式与URL地址
+        xhr.open('GET','http://www.liulongbin.top:3006/api/getbooks')
+        //3.调用send函数，发起Ajax请求
+        xhr.send()
+        //4.监听onreadystatechange事件
+        xhr.onreadystatechange = function(){
+            //4.1监听 xhr 对象的请求状态 readyState；与服务器相应的状态 status
+            if (xhr.readyState === 4 && xhr.status === 200){
+                //4.2 打印服务器响应回来的数据
+                console.log(xhr.responseText)
+            }
+        }
+    
+    }
+    function getPost(){
+        //1.创建 XRH对象
+        var xhr = new XMLHttpRequest()
+        //2.调用open函数
+        xhr.open('POST','http://www.liulongbin.top:3006/api/addbook')
+        //3.设置Content-Type 属性（固定写法）
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        //4.调用send函数，同时将数据以字符串的形式，提交给服务器
+        xhr.send('bookname=水传&author=施庵&publisher=天津图书出社')
+        //5.监听onreadystatechange事件
+        xhr.onreadystatechange = function(){
+            //5.1监听 xhr 对象的请求状态 readyState；与服务器相应的状态 status
+            if (xhr.readyState === 4 && xhr.status === 200){
+                //5.2 打印服务器响应回来的数据
+                console.log(xhr.responseText)
+            }
+        }
+    }
+    function hz(){
+        var obj = {"name":"张三","age":18}
+        console.log(obj)
+        //将javaScript的对象转换为json格式
+        var objzh = JSON.stringify(obj)
+        console.log(objzh)
+        //将json字符串转化为Javascript对象格式
+        var obj = JSON.parse(objzh)
+        console.log(obj)
+    }
+    hz()  
+    </script>
+</body>
+</html>

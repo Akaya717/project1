@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./lib/jquery.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function success(data){
+            console.log('我拿到了数据data:')
+            console.log(data)
+        }
+        //success('888')
+        $.ajax({
+            url:'http://www.liulongbin.top:3006/api/jsonp?name=zs&age=10',
+            //如果呀使用$.ajax()发起JSONP请求，必须指定datatype为jsonp
+            dataType:'jsonp',
+            //指定回调函数的名称
+            jsonpCallback:'cba',
+            success:function (res){
+                console.log(res)
+            }
+        })
+    </script>
+    <!-- <script src="./js/ceshi.js?callback=success">    </script> -->
+    <!-- <script src="http://www.liulongbin.top:3006/api/jsonp?callback=success"></script> -->
+</body>
+</html>

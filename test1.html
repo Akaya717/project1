@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Document</title>
+        <script src="./lib/jquery.js"></script>
+</head>
+<body>
+    <button id="btnGet">点击按钮发送一个get请求，得到数据</button>
+	<button id="btnPost">点击按钮发送一个post请求，得到数据</button>
+
+    <script>
+        $(function(){
+            $('#btnGet').on('click',function(){
+                $.get('http://www.liulongbin.top:3006/api/getbooks',{id:1},function(res){
+                    console.log(res)
+                })
+            })
+			
+			$('#btnPost').on('click',function(){
+				$.post('http://www.liulongbin.top:3006/api/addbook',{bookname: '水浒传', author: '施耐庵', publisher: '上海图书出版社'}, //提交的数据
+				function(res){
+					console.log(res)})
+			})
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <script src="./lib/jquery.js"></script>
+    <script src="./js/content.js"></script>
+    </head>
+
+<body style="padding: 15px;">
+    <!-- 发表留言部分 -->
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h3 class="panel-titile">发表评论</h3>
+        </div>
+
+        <form action="" class="panel-body" id="f1">
+            <div>评论人：</div>
+            <input type="text" class="form-control" name="username" autocomplete="off">
+            <div>评论内容：</div>
+            <textarea class="form-control" name="content"></textarea>
+            <button type="'submit" class="btn btn-primary" >发表评论</button>
+        </form>
+
+    </div>
+
+    <!-- 加载留言列表部分 -->
+    <ul class="list-group" id="ulcontent">
+
+    </ul>
+    
+</body>
+</html>

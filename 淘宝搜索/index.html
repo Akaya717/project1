@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>淘宝搜索案例</title>
+    <!-- 导入页面的基本样式 -->
+    <link rel="shortcut icon" type="image/x-icon" href="./images/logo.png"> 
+    <link rel="stylesheet" href="./css/search.css" />
+    <!-- 导入 jQuery -->
+    <script src="./lib/jquery.js"></script>
+    <script src="./lib/template-web.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+      <!-- Logo -->
+      <img src="./images/taobao_logo.png" alt="" class="logo" />
+
+      <div class="box">
+        <!-- tab 栏 -->
+        <div class="tabs">
+          <div class="tab-active">宝贝</div>
+          <div>店铺</div>
+        </div>
+        <!-- 搜索区域（搜索框和搜索按钮） -->
+        <div class="search-box">
+            <input id="ipt" type="text" class="ipt" placeholder="请输入要搜索的内容" />
+            <button class="btnSearch">搜索</button>
+        </div>
+        <!-- 搜索建议列表 -->
+        <div id="suggest-list" style="border-style: hidden solid solid solid; color: #ff5700;"></div>
+      </div>
+    </div>
+    <!-- 模板结构 -->
+    <script type="text/html" id="tpl-suggestList">
+        {{each result}}
+        <div class="suggest-item">{{$value[0]}}</div>
+        {{/each}}
+    </script>
+
+    <script>
+        $(function() {
+            //定义一个时间变量
+            var timer = null
+            //定义一个全局的缓存对象
+            var cacheObj = {};
+        // 监听文本框的 keyup 事件
+       $('#ipt').on('keyup', function() {
+        // 清空timer
+        clearTimeout(timer)
+        // 获取用户输入的内容
+       var keyword = $(this).val().trim()
+      // 判断用户输入的内容是否为空
+      if (keyword.length <= 0) {
+         return $('#suggest-list').empty().hide()
+     }
+     console.log(keyword)
+
+     //判断要查询的关键词是否有缓存对象，如果有，直接返回
+     if (cacheObj[keyword]) {
+        return renderSuggestList(cacheObj[keywords]);
+     }
+     fangdou(keyword)
+     //调用jsonp请求关键词的关联词
+    // getSuggestList(keyword)
+   // TODO：获取搜索建议列表
+})
+
+//防抖
+       function fangdou(kw) {
+        // 开启延时器
+            timer = setTimeout(function() {
+                getSuggestList(kw);
+            }, 500)
+            }
+function getSuggestList(kw) {
+	$.ajax({
+     	// 指定请求的 URL 地址，其中，q 是用户输入的关键字
+		url: 'https://suggest.taobao.com/sug?q=' + kw,
+		// 指定要发起的是 JSONP 请求
+		dataType: 'jsonp',
+		// 通过回调函数拿到jsonp返回回来的数据
+		success: function(res) { 
+			console.log(res) 
+            renderSuggestList(res)
+      }
+  })
+}
+
+//写一个用来渲染的方法
+// 传入一个res参数(res就是待渲染的数据）
+function renderSuggestList(res) {
+                // 判断是否有待渲染的数据，如果没有就return出去，清空列表并隐藏
+                if (res.result.length <= 0) {
+                    return $('#suggest-list').empty().hide();
+                }
+                // 调用模板引擎的template函数
+                var htmlstr = template('tpl-suggestList', res); // 返回一个渲染好的html结构
+                // 将渲染好的字符串放到搜索建议列表div中,并展示出来
+                $('#suggest-list').html(htmlstr).show();
+
+                    // 1、获取到用户输入的内容，当做键
+             var k = $('#ipt').val().trim();
+                 // 2、将数据做为值缓存到全局对象中
+             cacheObj[k] = res;
+            }
+        })
+             
+             
+    </script>
+  </body>
+</html>

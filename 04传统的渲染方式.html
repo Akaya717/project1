@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>传统渲染方式</title>
+    <script src="./lib/jquery.js"></script>
+    <!-- 导入模板引擎的JavaScript
+    导入进来后我们就会多一二个template函数 -->
+    <script src="./lib/template-web.js"></script>
+    </head>
+
+<body>
+    <div id="content"></div>
+    <script type="html" id="tpl-userinfo">
+        <div id="title">{{@title}}</div>
+        <div>姓名：<span id="uname">{{name}}</div>
+        <div>年龄：<span id="age">{{age}}</div>
+        <div>会员：<span id="vip">{{isVIP?'会员':'非会员'}}</div>
+        <div>性别：{{if sex === 1}}男{{else if sex === 0}}女{{/if}}</div>
+
+        <!-- 调用函数，第一个是参数值，第二个才是函数名称 -->
+        <div>注册时间：<span id="regTime">{{regTime|dateFomat }}</div>
+
+        <div>爱好：
+            <ul id="hobby">
+                {{each hobby}}
+                <li>{{$value}}</li>
+                {{/each}}
+            </ul>
+
+    </script>     
+    </div>
+
+    <script>
+        //定义一个事件过滤器，实际上的就是一个时间格式化函数
+        template.defaults.imports.dateFomat = function (date) {
+            //要操作的内容
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate()
+            //要返回的值
+            return y + '年' + m + '月' + d + '日'
+        }
+
+        //2准备用来渲染的数据结构
+        var data = {
+            title: '<h3>用户信息</h3>',
+            name: '王小美',
+            age: 20,
+            isVIP: true,
+            sex:1,
+            regTime: new Date(),
+            hobby: ['吃饭', '睡觉', '打豆豆']
+        }
+
+        //3调用templter函数渲染我们的数据，会自动生成一个html字符串
+        var htmlStr = template('tpl-userinfo',data)
+        //4将数据渲染到HTML当中
+        $('#content').html(htmlStr)
+        
+    </script>
+
+</body>
+</html> 

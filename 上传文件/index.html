@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+</head>
+<body>
+    <!-- 1.设定一个UI结构，上传的入口 -->
+    <input type="file" id="file1" />
+    <!-- 2.上传的按钮 -->
+    <button id="btnupload">上传</button>
+    <br>
+    <!-- 进度条 -->
+    <div class="progress" style="width: 500px; margin:10px 0;">
+        <div class="progress-bar progress-bar-danger progress-bar-striped active" id="percent" style="width: 0%;">0%</div>
+    </div>
+    <!-- 3.用来显示上传后的图片的标签 -->
+    <img src="" id="img" width="500">
+    <script>
+        //获取上传的按钮
+       var btnupload = document.querySelector('#btnupload')
+       //加上监听事件
+       btnupload.addEventListener('click', function(){
+        //判断文件是否为空
+       var file1 = document.querySelector('#file1').files
+       if (file1.length <= 0) {
+            return alert('文件为空，请上传文件')
+       }
+       //return alert('有文件')
+       //创建一个form DATa对象
+       var fd = new FormData()
+       //把表单中的获取到的文件追加到对象中
+       fd.append('avatar',file1[0])
+       //创建xhr对象
+       var xhr = new XMLHttpRequest()
+       xhr.upload.onprogress = function(e){
+        // e.lengthComputable是一个布尔值，表示当前上传的资源是否具有可计算的长度
+        if (e.lengthComputable) {
+           // e.loaded 以传输的字节
+           // e.total 需要传输的字节
+            var precentComplate = Math.ceil((e.loaded / e.total) * 100)
+            $('#percent')
+            //2.设置进度条的宽度
+            .attr('style','width:' + precentComplate + '%')
+            //3.显示当前上传进度的百分比
+            .html(precentComplate + '%')
+        }
+       }
+       
+       //open
+       xhr.open('POST','http://www.liulongbin.top:3006/api/upload/avatar')
+       //send
+       xhr.send(fd)
+       // 监听 xhr.upload 的 onprogress 事件
+       
+       xhr.onreadystatechange = function (){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            //请求成功以后，需要将得到的数据转为js对象】
+            var data = JSON.parse(xhr.responseText)
+            //判读上传成功
+            console.log(data)
+            if (data.status === 200) {
+                //拿到服务器返回的图片地址,并且追加到节点
+                document.querySelector('#img').src = 'http://www.liulongbin.top:3006' + data.url
+            } else {
+                console.log(data.message)
+            }
+        }
+       }
+       })
+    </script>
+</body>
+</html>

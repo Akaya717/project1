@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>苦瓜</title>
+        <meta name="description" content="">
+        <meta name="robots" content="noindex, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="./img/logo.png"> 
+        <link rel="stylesheet" href="./lib/bootstrap.css">
+        <link rel="stylesheet" href="./assets/goods.css">
+        <script src="./lib/jquery.js"></script>
+        <script src="./lib/template-web.js"></script>
+        <script src="./js/goods.js"></script>
+
+    </head>
+
+    <body>
+        <div id="goods-list"></div>
+
+        <script type="text/html" id="lb-Goods">
+
+        {{each}}
+        <div class="product-width col-xl-3 col-lg-3 col-md-2 col-sm-5 col-10 mb-25" style="background-color: #f5f5f5; margin-left: 25px; height: 4px;">
+            <div class="product-wrapper">
+                <div>&nbsp;</div>
+                <div class="product-img" >
+                    <a href="product-details.html">
+                        <img alt="" src="{{"http://114.132.65.169"+$value.goods_logo}}" >
+                    </a>
+                    <span>特价</span>
+                    
+                </div>
+                <div class="product-content text-left">
+
+                    <div class="product-hover-style">
+                        <div class="product-title">
+                            <h4>
+                                <a href="product-details.html">{{$value.goods_name}}</a>
+                            </h4>
+                        </div>
+
+                        <div class="cart-hover">
+                            <h4><a href="{:url('read',['id'=>$v:id])}">+ 加入购物车</a></h4>
+                        </div>
+                    </div>
+
+                    <div class="product-price-wrapper">
+                        <span></span>
+                        <span class="product-price-old">历史价格：￥{{$value.goods_old_price}}</span>
+                    </div>
+                </div>
+                <div class="product-list-details">
+                    <div class="product-price-wrapper">
+                        <span>现价￥：{{$value.goods_price}}</span>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        </script>
+    </body>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+</html>

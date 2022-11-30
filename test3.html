@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Document</title>
+        <script src="./lib/jquery.js"></script>
+</head>
+
+<body>
+    <form action="login.html" id="f1">
+        <input type="text" id="username" name="username">
+        <input type="text" id="password" name="password">
+        <button type="submit">点我提交</button>
+    </form>
+
+    <script>        //表提交只有采集功能，提交交给了ajax
+        $(function () {
+            $('#f1').on('submit', function(e) {
+                alert('我已经获取到了表单的提交事件')
+                e.preventDefault()
+                //通过函数来获取到数据
+                //在使用serialize()函数快速获取表单数据时候，表单用name提交
+                var data = $(this).serialize()  
+                console.log(data)
+                var dd = $('#f1').serialize()
+                console.log(dd)
+            })
+        })
+    </script>
+
+</body>
+</html>
